@@ -6,6 +6,7 @@ const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("../swagger.json");
 const { sequelize } = require("../src/models");
 const bodyParser = require("body-parser");
+const authRoute = require("./routes/authRoute.js");
 
 const connectDb = async () => {
   console.log("Checking database connection...");
@@ -20,8 +21,8 @@ const connectDb = async () => {
 const app = express();
 const options = {
   swaggerOptions: {
-    tryItOutEnabled: false,
-    supportedSubmitMethods: [""],
+    // tryItOutEnabled: false,
+    // supportedSubmitMethods: [""],
     overview: true,
   },
 };
@@ -38,6 +39,8 @@ app.use(
   swaggerUi.serve,
   swaggerUi.setup(swaggerDocument, options)
 );
+
+app.use("/users", authRoute);
 
 app.listen(PORT, async () => {
   await connectDb();
