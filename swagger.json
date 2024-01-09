@@ -2,12 +2,13 @@
     "openapi": "3.0.3",
     "info": {
         "title": "Scanwize_task",
-        "version": "1.0.0"
+        "version": "1.0.0",
+        "description": "Scanwize interview task docs"
     },
     "servers": [
         {
             "url": "http://localhost:3000/",
-            "description": "Development server"
+            "description": "development server"
         }
     ],
     "components": {
@@ -19,12 +20,216 @@
                 "value": "Bearer <JWT token here>"
             }
         },
-        "schemas": {}
+        "schemas": {
+            "CreateUserInput": {
+                "type": "object",
+                "required": [
+                    "username",
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "username": {
+                        "type": "string",
+                        "default": "John Doe"
+                    },
+                    "email": {
+                        "type": "string",
+                        "default": "example@email.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "default": "stringPassword456"
+                    }
+                }
+            },
+            "CreateUserResponse": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "description": "Message indicating the status of the registration process."
+                    },
+                    "user": {
+                        "type": "object",
+                        "properties": {
+                            "role": {
+                                "type": "string",
+                                "description": "User role (e.g., 'user' or 'admin')."
+                            },
+                            "id": {
+                                "type": "integer",
+                                "description": "User ID."
+                            },
+                            "username": {
+                                "type": "string",
+                                "description": "User's username."
+                            },
+                            "email": {
+                                "type": "string",
+                                "description": "User's email address."
+                            },
+                            "password": {
+                                "type": "string",
+                                "description": "Hashed password (you might want to exclude this from the response)."
+                            },
+                            "updatedAt": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "Date and time when the user was last updated."
+                            },
+                            "createdAt": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "Date and time when the user was created."
+                            }
+                        }
+                    }
+                }
+            },
+            "CreateUserBadRequest": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "description": "Message indicating error encountered"
+                    }
+                }
+            },
+            "ForbiddenResponse": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "description": "Forbidden request. You can only access your profile."
+                    }
+                }
+            },
+            "GetProfileResponse": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "username": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "role": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            }
+        }
     },
     "security": [
         {
             "bearerAuth": []
         }
     ],
+    "paths": {
+        "/users/register": {
+            "post": {
+                "tags": [
+                    "Create User"
+                ],
+                "summary": "Register a user",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateUserInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CreateUserResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CreateUserBadRequest"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/profile/{userId}": {
+            "get": {
+                "tags": [
+                    "Get users"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1,
+                        "description": "User ID"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetProfileResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized attempt"
+                    },
+                    "403": {
+                        "description": "Forbidden request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ForbiddenResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
     "tags": []
 }
