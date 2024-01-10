@@ -50,13 +50,11 @@ const registerUser = async (req, res) => {
       updatedAt: newUser.updatedAt,
     };
 
-    res
-      .status(201)
-      .json({
-        message: "User registered successfully",
-        user: userWithoutPassword,
-        token,
-      });
+    res.status(201).json({
+      message: "User registered successfully",
+      user: userWithoutPassword,
+      token,
+    });
   } catch (error) {
     console.error("Error during user registration:", error);
     res.status(400).json({ message: "An error occurred" });
@@ -102,7 +100,9 @@ const loginUser = async (req, res) => {
 const getProfile = async (req, res) => {
   const { userId } = req.params;
   try {
-    const user = await User.findByPk(userId);
+    const user = await User.findByPk(userId, {
+      attributes: { exclude: ["password"] },
+    });
     if (!user) {
       return res.status(404).json({ message: "User not found." });
     }
