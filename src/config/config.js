@@ -1,6 +1,9 @@
+const dotenv = require("dotenv");
+dotenv.config();
+
 module.exports = {
   development: {
-    url: "postgresql://postgres:M5Comp@localhost/scanwize_task",
+    url: process.env.DATABASE_URL,
     dialect: "postgres",
   },
   test: {
