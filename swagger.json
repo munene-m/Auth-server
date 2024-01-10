@@ -181,9 +181,6 @@
                     "username": {
                         "type": "string"
                     },
-                    "password": {
-                        "type": "string"
-                    },
                     "email": {
                         "type": "string"
                     },
