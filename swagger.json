@@ -69,9 +69,44 @@
                                 "type": "string",
                                 "description": "User's email address."
                             },
-                            "password": {
+                            "updatedAt": {
                                 "type": "string",
-                                "description": "Hashed password (you might want to exclude this from the response)."
+                                "format": "date-time",
+                                "description": "Date and time when the user was last updated."
+                            },
+                            "createdAt": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "Date and time when the user was created."
+                            }
+                        }
+                    },
+                    "token": {
+                        "type": "string"
+                    }
+                }
+            },
+            "LoginUserResponse": {
+                "type": "object",
+                "properties": {
+                    "user": {
+                        "type": "object",
+                        "properties": {
+                            "role": {
+                                "type": "string",
+                                "description": "User role (e.g., 'user' or 'admin')."
+                            },
+                            "id": {
+                                "type": "integer",
+                                "description": "User ID."
+                            },
+                            "username": {
+                                "type": "string",
+                                "description": "User's username."
+                            },
+                            "email": {
+                                "type": "string",
+                                "description": "User's email address."
                             },
                             "updatedAt": {
                                 "type": "string",
@@ -84,6 +119,20 @@
                                 "description": "Date and time when the user was created."
                             }
                         }
+                    },
+                    "token": {
+                        "type": "string"
+                    }
+                }
+            },
+            "LoginUserInput": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
                     }
                 }
             },
@@ -102,6 +151,24 @@
                     "message": {
                         "type": "string",
                         "description": "Forbidden request. You can only access your profile."
+                    }
+                }
+            },
+            "UserNotFoundResponse": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "description": "User not found."
+                    }
+                }
+            },
+            "InvalidCredentials": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "description": "Invalid credentials"
                     }
                 }
             },
@@ -181,10 +248,70 @@
                 }
             }
         },
+        "/users/login": {
+            "post": {
+                "tags": [
+                    "Login user"
+                ],
+                "summary": "Login a user",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginUserInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoginUserResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CreateUserBadRequest"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized attempt",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InvalidCredentials"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserNotFoundResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/users/profile/{userId}": {
             "get": {
                 "tags": [
-                    "Get users"
+                    "Get user profile"
                 ],
                 "security": [
                     {
