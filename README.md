@@ -45,17 +45,23 @@
    npx sequelize-cli db:migrate
    ```
 
-6. **Start the server**
+6. **Navigate back to the root of the project**
+
+   ```
+   cd ..
+   ```
+
+7. **Start the server**
 
    ```
    npm run start
    ```
 
-7. **Access the API documentation:**
+8. **Access the API documentation:**
 
    After starting the server, you can access the API documentation using the following link:
 
-   [API Documentation](http://localhost:3000/api-docs)
+   (http://localhost:3000/api-docs)
 
    Open the link in your web browser to explore and interact with the available endpoints, request examples, and responses.
 
