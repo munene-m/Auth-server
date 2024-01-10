@@ -16,9 +16,22 @@
 
 3. **Set up environment variables**
 
-   JWT_SECRET=
-   ADMIN_EMAIL=
-   DATABASE_URL= 'Your local postgres database'
+   To configure the application correctly, ensure the following environment variables are set. If they are not already defined, you can set them in your environment configuration.
+
+   - **JWT_SECRET**:
+
+     - This variable should contain the secret key used for JSON Web Token (JWT) encryption.
+
+   - **ADMIN_EMAIL**:
+
+     - Provide the email address associated with the administrator account.
+
+   - **DATABASE_URL**:
+     - Set the value to the connection string for your local PostgreSQL database.
+     - Example: `postgresql://username:password@localhost:5432/your_database_name`
+       Replace `username`, `password`, and `your_database_name` with your PostgreSQL credentials and database name.
+
+   Ensure that these variables are appropriately configured to enable the application to run smoothly.
 
 4. **Navigate to src directory**
 
