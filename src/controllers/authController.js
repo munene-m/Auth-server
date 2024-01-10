@@ -41,9 +41,22 @@ const registerUser = async (req, res) => {
     });
     const token = generateToken(newUser);
 
+    const userWithoutPassword = {
+      id: newUser.id,
+      username: newUser.username,
+      email: newUser.email,
+      role: newUser.role,
+      createdAt: newUser.createdAt,
+      updatedAt: newUser.updatedAt,
+    };
+
     res
       .status(201)
-      .json({ message: "User registered successfully", user: newUser, token });
+      .json({
+        message: "User registered successfully",
+        user: userWithoutPassword,
+        token,
+      });
   } catch (error) {
     console.error("Error during user registration:", error);
     res.status(400).json({ message: "An error occurred" });
@@ -67,9 +80,19 @@ const loginUser = async (req, res) => {
     if (!passwordMatch) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
+
+    const userWithoutPassword = {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      role: user.role,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    };
+
     const token = generateToken(user);
 
-    res.status(200).json({ user, token });
+    res.status(200).json({ user: userWithoutPassword, token });
   } catch (error) {
     console.error("Error during user registration:", error);
     res.status(400).json({ message: "An error occurred", error });
