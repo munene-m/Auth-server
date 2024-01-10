@@ -8,15 +8,21 @@
    git clone https://github.com/munene-m/scanwize_task
    ```
 
-2. **Install dependencies**
+2. **Navigate to the project location**
+
+   ```
+   cd scanwize_task
+   ```
+
+3. **Install dependencies**
 
    ```
    npm install
    ```
 
-3. **Set up environment variables**
+4. **Set up environment variables**
 
-   To configure the application correctly, ensure the following environment variables are set. If they are not already defined, you can set them in your environment configuration.
+   To configure the application correctly, ensure the following environment variables are set. If they are not already defined, you can set in a `.env` file at the root of the project.
 
    - **JWT_SECRET**:
 
@@ -33,31 +39,31 @@
 
    Ensure that these variables are appropriately configured to enable the application to run smoothly.
 
-4. **Navigate to src directory**
+5. **Navigate to src directory**
 
    ```
    cd src
    ```
 
-5. **Run database migration**
+6. **Run database migration**
 
    ```
    npx sequelize-cli db:migrate
    ```
 
-6. **Navigate back to the root of the project**
+7. **Navigate back to the root of the project**
 
    ```
    cd ..
    ```
 
-7. **Start the server**
+8. **Start the server**
 
    ```
    npm run start
    ```
 
-8. **Access the API documentation:**
+9. **Access the API documentation:**
 
    After starting the server, you can access the API documentation using the following link:
 
