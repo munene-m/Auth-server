@@ -1,5 +1,5 @@
 {
-  "name": "scanwize_task",
+  "name": "auth-server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
