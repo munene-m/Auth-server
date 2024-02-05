@@ -1,11 +1,11 @@
-# Scanwize Interview Task
+# Authentication and authorization API
 
 ## Installation
 
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/munene-m/scanwize_task
+   git clone https://github.com/munene-m/Auth-server
    ```
 
 2. **Navigate to the project location**
